@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thumbnail-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thumbnail-api
+  template:
+    metadata:
+      labels:
+        app: thumbnail-api
+    spec:
+      containers:
+        - name: thumbnail-api
+          image: nirjhar12/cglab-sre:c523bc232d45ef08eb4bb3c2e91ae1ab8bfde58f
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URL
+              value: mongodb://db:27017
+            - name: MINIO_ACCESS_KEY
+              value: someaccesskey
+            - name: MINIO_SECRET_KEY
+              value: someaccesskey
+            - name: MINIO_ENDPOINT
+              value: s3
+          imagePullPolicy: Always
+      imagePullSecrets:
+            - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thumbnail-api
+spec:
+  selector:
+    app: thumbnail-api
+  ports:
+    - protocol: TCP
+      targetPort: 3000
+      port: 3000
+  type: LoadBalancer
