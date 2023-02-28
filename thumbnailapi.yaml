@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: thumbnail-api
 spec:
-  replicas: 4
+  replicas: 2
   selector:
     matchLabels:
       app: thumbnail-api
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: thumbnail-api
-          image: nirjhar12/cglab-sre:26cf89e3ba07032012ef5798be70f9e63719e767
+          image: nirjhar12/cglab-sre:c523bc232d45ef08eb4bb3c2e91ae1ab8bfde58f
           ports:
             - containerPort: 3000
           env:
@@ -26,6 +26,8 @@ spec:
               value: someaccesskey
             - name: MINIO_ENDPOINT
               value: s3
+            - name: MINIO_PORT
+              value: "9000"
           imagePullPolicy: Always
       imagePullSecrets:
             - name: regcred
