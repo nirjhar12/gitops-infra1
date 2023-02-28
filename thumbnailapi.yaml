@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: thumbnail-api
-          image: nirjhar12/cglab-sre:c523bc232d45ef08eb4bb3c2e91ae1ab8bfde58f
+          image: nirjhar12/cglab-sre:3106b64646cee9c0cb9b7db750ddf7325fc70743
           ports:
             - containerPort: 3000
           env:
