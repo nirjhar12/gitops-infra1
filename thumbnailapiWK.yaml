@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thumbnail-wk
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: thumbnail-wk
+  template:
+    metadata:
+      labels:
+        app: thumbnail-wk
+    spec:
+      containers:
+        - name: thumbnail-wk
+          image: nirjhar12/cglab-sre:6236b2f3e13c0def7f4e610ad11f4ee593e224c8
+          ports:
+            - containerPort: 6000
+          env:
+            - name: MONGO_URL
+              value: mongodb://db:27017
+            - name: MINIO_ACCESS_KEY
+              value: someaccesskey
+            - name: MINIO_SECRET_KEY
+              value: somesecretkey
+            - name: MINIO_ENDPOINT
+              value: s3
+            - name: MINIO_PORT
+              value: "9000"
+          imagePullPolicy: Always
+      imagePullSecrets:
+            - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thumbnail-wk
+spec:
+  selector:
+    app: thumbnail-wk
+  ports:
+    - protocol: TCP
+      targetPort: 6000
+      port: 6000
