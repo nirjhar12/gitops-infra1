@@ -23,7 +23,7 @@ spec:
             - name: MINIO_ACCESS_KEY
               value: someaccesskey
             - name: MINIO_SECRET_KEY
-              value: someaccesskey
+              value: somesecretkey
             - name: MINIO_ENDPOINT
               value: s3
             - name: MINIO_PORT
